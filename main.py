@@ -9,9 +9,9 @@ def ssort(L):
         return(L)
     else:
         m = L.index(min(L))
-        print('selecting minimum %s' % L[m])       
+        #print('selecting minimum %s' % L[m])       
         L[0], L[m] = L[m], L[0]
-        print('recursively sorting L=%s\n' % L[1:])
+        #print('recursively sorting L=%s\n' % L[1:])
         return [L[0]] + ssort(L[1:])
         
 def qsort(a, pivot_fn):
@@ -55,7 +55,7 @@ def time_search(sort_fn, mylist):
     return (time.time() - start) * 1000
     ###
 
-def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000]):
+def compare_sort(sizes=[10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]):
     """
     Compare the running time of different sorting algorithms.
 
@@ -77,6 +77,7 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
         random.shuffle(mylist)
         result.append([
             len(mylist),
+            time_search(ssort, mylist.copy()),
             time_search(qsort_fixed_pivot, mylist.copy()),
             time_search(qsort_random_pivot, mylist.copy()),
             time_search(tim_sort, mylist.copy())
@@ -86,7 +87,7 @@ def compare_sort(sizes=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 10
 def print_results(results):
     """Prints a formatted table of the comparison results."""
     print(tabulate.tabulate(results,
-                            headers=['n', 'qsort-fixed-pivot (ms)', 'qsort-random-pivot (ms)', 'Timsort (ms)'],
+                            headers=['n', 'ssort (ms)', 'qsort-fixed-pivot (ms)', 'qsort-random-pivot (ms)', 'Timsort (ms)'],
                             floatfmt=".3f",
                             tablefmt="github"))
 
